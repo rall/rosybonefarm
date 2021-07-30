@@ -187,9 +187,9 @@
     }
   },
   "cli": {
-    "defaultCollection": "@nrwl/nest"
+    "defaultCollection": "@nrwl/angular"
   },
-  "defaultProject": "api",
+  "defaultProject": "farmstand",
   "generators": {
     "@nrwl/angular:application": {
       "style": "css",
