@@ -14,12 +14,7 @@
     "default": {
       "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ],
+        "cacheableOperations": ["build", "lint", "test", "e2e"],
         "accessToken": "NDQ4MTgxYzMtNDg5Mi00M2Q4LTgwOWUtNzUxNTY2YTMwOTg4fHJlYWQtd3JpdGU=",
         "canTrackAnalytics": false,
         "showUsageWarnings": true
@@ -37,6 +32,13 @@
   "projects": {
     "api": {
       "tags": []
+    },
+    "farmstand": {
+      "tags": []
+    },
+    "farmstand-e2e": {
+      "tags": [],
+      "implicitDependencies": ["farmstand"]
     }
   }
 }

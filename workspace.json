@@ -50,10 +50,147 @@
           }
         }
       }
+    },
+    "farmstand": {
+      "projectType": "application",
+      "root": "apps/farmstand",
+      "sourceRoot": "apps/farmstand/src",
+      "prefix": "app",
+      "targets": {
+        "build": {
+          "executor": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/farmstand",
+            "index": "apps/farmstand/src/index.html",
+            "main": "apps/farmstand/src/main.ts",
+            "polyfills": "apps/farmstand/src/polyfills.ts",
+            "tsConfig": "apps/farmstand/tsconfig.app.json",
+            "assets": [
+              "apps/farmstand/src/favicon.ico",
+              "apps/farmstand/src/assets"
+            ],
+            "styles": ["apps/farmstand/src/styles.css"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/farmstand/src/environments/environment.ts",
+                  "with": "apps/farmstand/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "executor": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "farmstand:build:production"
+            },
+            "development": {
+              "browserTarget": "farmstand:build:development"
+            }
+          },
+          "defaultConfiguration": "development",
+          "options": {
+            "proxyConfig": "apps/farmstand/proxy.conf.json"
+          }
+        },
+        "extract-i18n": {
+          "executor": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "farmstand:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/farmstand/src/**/*.ts",
+              "apps/farmstand/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/farmstand"],
+          "options": {
+            "jestConfig": "apps/farmstand/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "farmstand-e2e": {
+      "root": "apps/farmstand-e2e",
+      "sourceRoot": "apps/farmstand-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/farmstand-e2e/cypress.json",
+            "tsConfig": "apps/farmstand-e2e/tsconfig.e2e.json",
+            "devServerTarget": "farmstand:serve:development"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "farmstand:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/farmstand-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
     }
   },
   "cli": {
     "defaultCollection": "@nrwl/nest"
   },
-  "defaultProject": "api"
+  "defaultProject": "api",
+  "generators": {
+    "@nrwl/angular:application": {
+      "style": "css",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "css",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "css"
+    }
+  }
 }
