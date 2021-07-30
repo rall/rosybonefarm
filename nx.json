@@ -39,6 +39,9 @@
     "farmstand-e2e": {
       "tags": [],
       "implicitDependencies": ["farmstand"]
+    },
+    "models": {
+      "tags": []
     }
   }
 }
