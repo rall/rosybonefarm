@@ -1,3 +1,4 @@
-export function models(): string {
-  return 'models';
+export interface EggsInventory {
+  onHand: number;
+  inStand: number;
 }
