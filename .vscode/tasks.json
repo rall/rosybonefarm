@@ -1,0 +1,36 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "serve farmstand",
+			"dependsOn": "serve api",
+			"type": "shell",
+			"command": "nx run farmstand:serve:development --watch",
+			"isBackground": true,
+			"problemMatcher": {
+				"owner": "farmstand",
+				"base": "$tsc-watch",
+				"background" : {
+          "activeOnStart": true,
+          "beginsPattern": "Generating browser application bundles (phase: emitting)\\.\\.\\.",
+          "endsPattern": "Browser application bundle generation complete\\."
+				}
+			}
+		},
+		{
+			"label": "serve api",
+			"type": "shell",
+			"command": "nx run api:serve",
+			"problemMatcher": {
+				"owner": "farmstand",
+				"base": "$tsc-watch",
+				"background" : {
+          "activeOnStart": true,
+          "beginsPattern": "Issues checking in progress\\.\\.\\.",
+          "endsPattern": "No issues found\\."
+				}
+			},
+			"isBackground": true
+		}
+	]
+}
