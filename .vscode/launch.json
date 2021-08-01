@@ -10,7 +10,7 @@
       "type": "chrome",
       "preLaunchTask": "serve farmstand",
       "sourceMaps": true,
-      "url": "http://localhost:4200",
+      "url": "http://kubernetes.docker.internal:4200",
       "webRoot": "${workspaceFolder}/dist/apps/farmstand",
       "sourceMapPathOverrides": {
         "webpack:/*": "${webRoot}/*",

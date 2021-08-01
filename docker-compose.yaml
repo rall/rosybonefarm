@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  frontend:
+    image: nginxinc/nginx-unprivileged
+    volumes: 
+      - ./dist/apps/farmstand:/usr/share/nginx/html
+    ports:
+      - 4200:4200
+  api:
+    image: nginxinc/nginx-unprivileged
+    volumes: 
+      - ./dist/apps/api:/usr/share/nginx/html
+    ports:
+      - 3333:3333      
+  mongodb:
+    image: mongo
+    restart: always
+
+
