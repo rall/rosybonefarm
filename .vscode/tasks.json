@@ -3,6 +3,7 @@
 	"tasks": [
 		{
 			"label": "launch stack",
+			"dependsOn": "build api",
 			"type": "shell",
 			"command": "./stack.sh",
 			"presentation": {
@@ -12,7 +13,7 @@
 		},
 		{
 			"label": "serve farmstand",
-			"dependsOn": "serve api",
+			"dependsOn": "launch stack",
 			"type": "shell",
 			"command": "nx run farmstand:serve:development --watch --disable-host-check",
 			"isBackground": true,
@@ -27,10 +28,9 @@
 			}
 		},
 		{
-			"label": "serve api",
+			"label": "build api",
 			"type": "shell",
-			"dependsOn": "launch stack",
-			"command": "nx run api:serve",
+			"command": "nx run api:build --watch",
 			"problemMatcher": {
 				"owner": "farmstand",
 				"base": "$tsc-watch",
