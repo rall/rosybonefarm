@@ -1,18 +1,25 @@
-version: "3.9"
+version: "3"
 services:
   frontend:
     image: nginxinc/nginx-unprivileged
     volumes:
       - ./dist/apps/farmstand:/usr/share/nginx/html
     ports:
-      - 4200:4200
+      - 4200
   api:
     image: rosybone/api
     volumes:
       - ./dist/apps/api:/home/node/
     ports:
-      - 3333:3333      
-  mongodb:
-    image: mongo
+      - 3333
+  database:
+    image: rosybone/sqlite3:latest
+    ports:
+      - 9000:9000
+    stdin_open: true
+    tty: true
+    volumes:
+      - database:/home/sqlite/db
+    entrypoint: sqlite3 /home/db/rosybone.db
 volumes:
-  package:
+  database:
