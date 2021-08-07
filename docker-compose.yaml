@@ -11,15 +11,15 @@ services:
     volumes:
       - ./dist/apps/api:/home/node/
     ports:
-      - 3333
+      - 3333:3333
   database:
-    image: rosybone/sqlite3:latest
-    ports:
-      - 9000:9000
-    stdin_open: true
-    tty: true
+    image: postgres:alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
     volumes:
-      - database:/home/sqlite/db
-    entrypoint: sqlite3 /home/db/rosybone.db
+      - database:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
 volumes:
   database:
