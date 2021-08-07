@@ -6,3 +6,30 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id          Int        @id @default(autoincrement())
+  createdAt   DateTime   @default(now())
+  email       String     @unique
+  name        String?
+  role        Role       @default(USER)
+}
+
+model Slot {
+  id          Int        @id @default(1)
+  name        String
+  eggsDozenId Int
+  eggsDozen   EggsDozen? @relation(fields: [eggsDozenId], references: [id])
+}
+
+model EggsDozen {
+  id          Int        @id @default(autoincrement())
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @default(now())
+  slot        Slot?
+}
