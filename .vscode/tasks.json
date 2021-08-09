@@ -17,8 +17,35 @@
 			}
 		},
 		{
+			"label": "migrate db",
+			"dependsOn": "postgres logs",
+			"type": "shell",
+			"command": "./migrate.sh",
+			"presentation": {
+				"reveal": "always",
+				"panel": "new"
+			},
+			"isBackground": true
+		},
+		{
+			"label": "postgres logs",
+			"type": "shell",
+			"command": "docker service logs --follow rosybone_database",
+			"presentation": {
+				"reveal": "always",
+				"panel": "new"
+			},
+			"problemMatcher": {
+				"base": "$tsc-watch",
+				"background": {
+					"beginsPattern": "starting PostgreSQL 13\\.3",
+					"endsPattern": "database system is ready to accept connections"
+				}
+			},
+			"isBackground": true
+		},
+		{
 			"label": "api logs",
-			"dependsOn": "launch stack",
 			"type": "shell",
 			"command": "docker service logs --follow rosybone_api",
 			"presentation": {
@@ -29,7 +56,7 @@
 				"base": "$tsc-watch",
 				"background": {
 					"activeOnStart": true,
-					"beginsPattern": "Waiting for postgres",
+					"beginsPattern": "starting api",
 					"endsPattern": "Listening at http:\/\/localhost:3333\/api"
 				}
 			},
@@ -37,7 +64,8 @@
 		},
 		{
 			"label": "serve farmstand",
-			"dependsOn": "api logs",
+			"dependsOn": ["launch stack", "wait for api"],
+			"dependsOrder": "sequence",
 			"type": "shell",
 			"command": "nx run farmstand:serve:development --watch --disable-host-check",
 			"isBackground": true,
@@ -53,7 +81,7 @@
 		{
 			"label": "build api",
 			"type": "shell",
-			"command": "source .env && npx prisma generate && nx run api:build --watch",
+			"command": "nx run api:build --watch",
 			"problemMatcher": {
 				"base": "$tsc-watch",
 				"background": {
@@ -63,6 +91,10 @@
 				}
 			},
 			"isBackground": true
+		},
+		{
+			"label": "wait for api",
+			"dependsOn": [ "migrate db", "api logs" ]
 		}
 	]
 }
