@@ -32,4 +32,6 @@ model EggsDozen {
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @default(now())
   slot        Slot?
+  sold        Boolean    @default(false)
+  weight      Int
 }
