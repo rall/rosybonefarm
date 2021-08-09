@@ -2,8 +2,8 @@
   "name": "rosybonefarm",
   "version": "0.0.0",
   "license": "MIT",
-  "config": {
-    "prisma.schema": "./prisma/prisma.schema"
+  "prisma": {
+    "schema": "apps/api/prisma/schema.prisma"
   },
   "scripts": {
     "nx": "nx",
