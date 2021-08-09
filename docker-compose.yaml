@@ -20,11 +20,8 @@ services:
       interval: 10s
       timeout: 5s
   database:
-    image: postgres:alpine
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: example
     env_file: ".env"
+    image: rosybone/postgres
     volumes:
       - database:/var/lib/postgresql/data
     ports:
