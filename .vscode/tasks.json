@@ -1,5 +1,10 @@
 {
 	"version": "2.0.0",
+	"options": {
+		"env": {
+			"DATABASE_URL": "postgresql://${POSTGRES_APP_USER}:${POSTGRES_APP_PASSWORD}@${DATABASE_HOST}:5432/${POSTGRES_APP_DB}"
+		}
+	},
 	"tasks": [
 		{
 			"label": "launch stack",
@@ -7,37 +12,54 @@
 			"type": "shell",
 			"command": "./stack.sh",
 			"presentation": {
-        "reveal": "always",
-        "panel": "new"
-      }
+				"reveal": "always",
+				"panel": "new"
+			}
+		},
+		{
+			"label": "api logs",
+			"dependsOn": "launch stack",
+			"type": "shell",
+			"command": "docker service logs --follow rosybone_api",
+			"presentation": {
+				"reveal": "always",
+				"panel": "new"
+			},
+			"problemMatcher": {
+				"base": "$tsc-watch",
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "Waiting for postgres",
+					"endsPattern": "Listening at http:\/\/localhost:3333\/api"
+				}
+			},
+			"isBackground": true
 		},
 		{
 			"label": "serve farmstand",
-			"dependsOn": "launch stack",
+			"dependsOn": "api logs",
 			"type": "shell",
 			"command": "nx run farmstand:serve:development --watch --disable-host-check",
 			"isBackground": true,
 			"problemMatcher": {
-				"owner": "farmstand",
 				"base": "$tsc-watch",
-				"background" : {
-          "activeOnStart": true,
-          "beginsPattern": "Generating browser application bundles (phase: emitting)\\.\\.\\.",
-          "endsPattern": "Browser application bundle generation complete\\."
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "Generating browser application bundles (phase: emitting)\\.\\.\\.",
+					"endsPattern": "Browser application bundle generation complete\\."
 				}
 			}
 		},
 		{
 			"label": "build api",
 			"type": "shell",
-			"command": "nx run api:build --watch",
+			"command": "source .env && npx prisma generate && nx run api:build --watch",
 			"problemMatcher": {
-				"owner": "farmstand",
 				"base": "$tsc-watch",
-				"background" : {
-          "activeOnStart": true,
-          "beginsPattern": "Issues checking in progress\\.\\.\\.",
-          "endsPattern": "No issues found\\."
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "Issues checking in progress\\.\\.\\.",
+					"endsPattern": "No issues found\\."
 				}
 			},
 			"isBackground": true
