@@ -20,7 +20,18 @@
 			"label": "migrate db",
 			"dependsOn": "postgres logs",
 			"type": "shell",
-			"command": "./migrate.sh",
+			"command": "./scripts/migrate.sh",
+			"presentation": {
+				"reveal": "always",
+				"panel": "new"
+			},
+			"isBackground": true
+		},
+		{
+			"label": "watch db",
+			"dependsOn": "migrate db",
+			"type": "shell",
+			"command": "./scripts/watch-schema.sh",
 			"presentation": {
 				"reveal": "always",
 				"panel": "new"

@@ -9,4 +9,3 @@ while ! npx prisma migrate dev; do
   sleep 2
 done
 echo "Migration done"
-
