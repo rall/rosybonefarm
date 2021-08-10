@@ -67,7 +67,7 @@
 				"base": "$tsc-watch",
 				"background": {
 					"activeOnStart": true,
-					"beginsPattern": "starting api",
+					"beginsPattern": "generating prisma client",
 					"endsPattern": "Listening at http:\/\/localhost:3333\/api"
 				}
 			},
