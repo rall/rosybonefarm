@@ -23,15 +23,19 @@ export class EggsDozenService {
     });
   }
 
-  async getEggsInStand(): Promise<unknown[]> {
+  async getEggsInStand(): Promise<EggsDozen[]> {
     Logger.log("service getEggsInStand");
-    const foo = await this.prisma.slot.findMany({
-      include: {
-        eggsDozen: true
+    return await this.prisma.eggsDozen.findMany({
+      where: {
+        NOT: [
+          {
+            slotId: {
+              not: undefined
+            }
+          }
+        ]
       }
     });
-    Logger.log(foo);
-    return foo;
   }
 
   async getAllEggs(): Promise<EggsDozen[]> {
@@ -53,6 +57,16 @@ export class EggsDozenService {
       orderBy: { packed: 'ASC' }
     } as Prisma.EggsDozenDeleteManyArgs);
     return num.count;
+  }
+
+  async sellEggsDozen(where?: Prisma.EggsDozenWhereUniqueInput): Promise<EggsDozen> {
+    return this.prisma.eggsDozen.update({ 
+      where,
+      data: {
+        sold: true,
+        slotId: null
+      }
+    });
   }
 
 }
