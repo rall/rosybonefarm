@@ -9,7 +9,9 @@ services:
     ports:
       - 4200
   api:
-    env_file: ".env"
+    env_file: 
+      - .env
+      - .container.env
     networks:
       - frontend
       - backend
@@ -27,7 +29,9 @@ services:
       timeout: 5s
     entrypoint: /home/node/entrypoint.sh
   database:
-    env_file: ".env"
+    env_file: 
+      - .env
+      - .container.env
     networks:
       - backend
     image: rosybone/postgres
