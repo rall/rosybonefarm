@@ -79,9 +79,15 @@
 			}
 		},
 		{
+			"label": "clean dist",
+			"type": "shell",
+			"command": "rm -rf dist/apps/api/node_modules/"
+		},
+		{
 			"label": "build api",
 			"type": "shell",
 			"command": "nx run api:build --watch",
+			"dependsOn": "clean dist",
 			"problemMatcher": {
 				"base": "$tsc-watch",
 				"background": {
