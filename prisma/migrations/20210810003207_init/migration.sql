@@ -16,7 +16,6 @@ CREATE TABLE "User" (
 CREATE TABLE "Slot" (
     "id" INTEGER NOT NULL DEFAULT 1,
     "name" TEXT NOT NULL,
-    "eggsDozenId" INTEGER NOT NULL,
 
     PRIMARY KEY ("id")
 );
@@ -26,6 +25,9 @@ CREATE TABLE "EggsDozen" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "slotId" INTEGER,
+    "sold" BOOLEAN NOT NULL DEFAULT false,
+    "weight" INTEGER NOT NULL,
 
     PRIMARY KEY ("id")
 );
@@ -34,7 +36,7 @@ CREATE TABLE "EggsDozen" (
 CREATE UNIQUE INDEX "User.email_unique" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Slot_eggsDozenId_unique" ON "Slot"("eggsDozenId");
+CREATE UNIQUE INDEX "EggsDozen_slotId_unique" ON "EggsDozen"("slotId");
 
 -- AddForeignKey
-ALTER TABLE "Slot" ADD FOREIGN KEY ("eggsDozenId") REFERENCES "EggsDozen"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "EggsDozen" ADD FOREIGN KEY ("slotId") REFERENCES "Slot"("id") ON DELETE SET NULL ON UPDATE CASCADE;
