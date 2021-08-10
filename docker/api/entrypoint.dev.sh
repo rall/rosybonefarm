@@ -1,4 +1,8 @@
 #!/bin/bash
-
+export DATABASE_URL=postgresql://${POSTGRES_APP_USER}:${POSTGRES_APP_PASSWORD}@${DATABASE_HOST}:5432/${POSTGRES_APP_DB}
+cd nestjs
+PRISMA_CLI_BINARY_TARGET=linux-arm-openssl-1.1.x npm install
+ln -s ../prisma/ ./db
+npx prisma generate --schema=db/schema.prisma
 echo "starting api"
-DATABASE_URL="postgresql://${POSTGRES_APP_USER}:${POSTGRES_APP_PASSWORD}@${DATABASE_HOST}:5432/${POSTGRES_APP_DB}" nodemon nestjs/main.js
+nodemon main.js
