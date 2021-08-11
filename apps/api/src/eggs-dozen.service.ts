@@ -60,16 +60,11 @@ export class EggsDozenService {
     return num.count;
   }
 
-  async updateSlot(id:number, slotName: string): Promise<EggsDozen> {
-    Logger.debug('update row', slotName);
-    try {
-      return await this.prisma.eggsDozen.update({
-        where: { id },
-        data: { slotName }
-      });
-    } catch (error) {
-      Logger.error(error, error.code);
-    }
+  async updateSlot(id:number, slotName: string | null): Promise<EggsDozen> {
+    slotName = slotName || null;
+    return await this.prisma.eggsDozen.update({
+      where: { id },
+      data: { slotName }
+    });
   }
-
 }

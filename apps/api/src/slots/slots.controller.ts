@@ -18,7 +18,7 @@ export class SlotsController {
     const { name } = postData;
     if (!name) {
       throw new BadRequestException('Name is required');
-    } else {    
+    } else {
       return await this.slotService.createSlot(name);
     }
   }
