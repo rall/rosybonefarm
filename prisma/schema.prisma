@@ -20,9 +20,9 @@ model User {
 }
 
 model Slot {
-  name      String    @id
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  name      String     @id
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
   eggsDozen EggsDozen?
 }
 
