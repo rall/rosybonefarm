@@ -12,6 +12,8 @@ export class SlotService {
   }
 
   async getAllSlots(): Promise<Slot[]> {
-    return await this.prisma.slot.findMany();
+    return await this.prisma.slot.findMany({
+      include: { eggsDozen: true }
+    });
   }
 }
