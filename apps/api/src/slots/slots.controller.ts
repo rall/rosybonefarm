@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Post } from '@nestjs/common';
 import { Slot } from '@prisma/client';
 import { SlotService } from '../slot.service';
 
@@ -11,12 +11,15 @@ export class SlotsController {
     return await this.slotService.getAllSlots();
   }
 
-  
   @Post()
   async createSlot(
     @Body() postData: { name?: string },
   ): Promise<Slot> {
     const { name } = postData;
-    return await this.slotService.createSlot(name);
+    if (!name) {
+      throw new BadRequestException('Name is required');
+    } else {    
+      return await this.slotService.createSlot(name);
+    }
   }
 }
