@@ -12,6 +12,7 @@ export class SalesService {
       where: { id: data.eggsDozenId },
       data: {
         sold: true,
+        slotName: null,
         sale: {
           create: {
             userId: data.userId
