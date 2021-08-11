@@ -1,39 +1,54 @@
-datasource db {
-  url      = env("DATABASE_URL")
-  provider = "postgresql"
-}
-
 generator client {
   provider      = "prisma-client-js"
-  binaryTargets = ["darwin-arm64", "linux-arm-openssl-1.1.x"]
   output        = "../node_modules/.prisma/client"
+  binaryTargets = ["darwin-arm64", "linux-arm-openssl-1.1.x"]
 }
 
-enum Role {
-  USER
-  ADMIN
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   email     String   @unique
   name      String?
   role      Role     @default(USER)
+  sales     Sale[]
 }
 
 model Slot {
-  id        Int        @id @default(autoincrement())
-  name      String
+  name      String    @id
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   eggsDozen EggsDozen?
 }
 
 model EggsDozen {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  slotId    Int?
-  slot      Slot?    @relation(fields: [slotId], references: [id])
+  updatedAt DateTime @updatedAt
+  slotName  String?  @unique
   sold      Boolean  @default(false)
   weight    Int
+  slot      Slot?    @relation(fields: [slotName], references: [name])
+  sale      Sale?
+}
+
+model Sale {
+  userId      Int
+  eggsDozenId Int       @unique
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  eggsDozen   EggsDozen @relation(fields: [eggsDozenId], references: [id])
+  user        User      @relation(fields: [userId], references: [id])
+
+  @@id([userId, eggsDozenId])
+}
+
+enum Role {
+  USER
+  ADMIN
 }
