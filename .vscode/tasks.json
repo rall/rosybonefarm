@@ -31,7 +31,7 @@
 			"label": "seed db",
 			"dependsOn": "migrate db",
 			"type": "shell",
-			"command": "npx ts-node prisma/seeds",
+			"command": "npx ts-node prisma/seed.ts",
 			"presentation": {
 				"reveal": "always",
 				"panel": "new"
