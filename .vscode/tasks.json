@@ -28,6 +28,16 @@
 			"isBackground": true
 		},
 		{
+			"label": "seed db",
+			"dependsOn": "migrate db",
+			"type": "shell",
+			"command": "npx ts-node prisma/seeds",
+			"presentation": {
+				"reveal": "always",
+				"panel": "new"
+			}
+		},
+		{
 			"label": "watch db",
 			"dependsOn": "migrate db",
 			"type": "shell",
@@ -111,7 +121,7 @@
 		},
 		{
 			"label": "wait for api",
-			"dependsOn": [ "migrate db", "api logs" ]
+			"dependsOn": [ "seed db", "api logs" ]
 		}
 	]
 }
