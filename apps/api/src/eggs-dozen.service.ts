@@ -29,7 +29,7 @@ export class EggsDozenService {
       where: {
         NOT: [
           {
-            slotId: {
+            slotName: {
               not: undefined
             }
           }
@@ -43,7 +43,8 @@ export class EggsDozenService {
   }
 
   async createEggsDozen(weight: number): Promise<EggsDozen> {
-    return await this.prisma.eggsDozen.create({ data: { weight } as EggsDozen });
+    Logger.log(`eggs doz create ${weight}`, "service");
+    return await this.prisma.eggsDozen.create({ data: { weight } });
   }
 
   async deleteEggsDozen(where?: Prisma.EggsDozenWhereUniqueInput): Promise<EggsDozen> {
@@ -58,15 +59,4 @@ export class EggsDozenService {
     } as Prisma.EggsDozenDeleteManyArgs);
     return num.count;
   }
-
-  async sellEggsDozen(where?: Prisma.EggsDozenWhereUniqueInput): Promise<EggsDozen> {
-    return this.prisma.eggsDozen.update({ 
-      where,
-      data: {
-        sold: true,
-        slotId: null
-      }
-    });
-  }
-
 }

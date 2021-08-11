@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Logger, Post, Query } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Logger, Post, Query } from '@nestjs/common';
 import { EggsDozen } from '@prisma/client';
 import { EggsDozenService } from '../eggs-dozen.service';
 
@@ -21,9 +21,10 @@ export class EggsDozenController {
     @Body() postData: { weight: number },
   ): Promise<EggsDozen> {
     const { weight } = postData;
-    return await this.eggsDozenService.createEggsDozen(weight);
+    if (!weight) {
+      throw new BadRequestException('Weight is required');
+    } else {    
+      return await this.eggsDozenService.createEggsDozen(weight);
+    }
   }
-
-
-
 }
