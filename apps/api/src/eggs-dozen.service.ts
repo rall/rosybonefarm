@@ -59,4 +59,17 @@ export class EggsDozenService {
     } as Prisma.EggsDozenDeleteManyArgs);
     return num.count;
   }
+
+  async updateSlot(id:number, slotName: string): Promise<EggsDozen> {
+    Logger.debug('update row', slotName);
+    try {
+      return await this.prisma.eggsDozen.update({
+        where: { id },
+        data: { slotName }
+      });
+    } catch (error) {
+      Logger.error(error, error.code);
+    }
+  }
+
 }
